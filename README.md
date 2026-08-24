@@ -39,7 +39,7 @@ Em desenvolvimento — acompanhe o progresso real em `ENTREGA.yaml`.
 ## Modelo e provedor
 
 - **Provedor:** Google AI Studio (camada gratuita)
-- **Modelo:** `gemini-2.0-flash`
+- **Modelo:** `gemini-3.6-flash`
 
 Escolhido pelo rate limit generoso na camada free e SDK oficial simples (`google-genai`),
 além de bom desempenho em tarefas de análise estruturada.

@@ -1,5 +1,5 @@
 candidato: "SEU NOME AQUI"
-modelo_usado: gemini-2.0-flash
+modelo_usado: gemini-3.6-flash
 provedor: google-ai-studio
 horas_dedicadas: 0
 
