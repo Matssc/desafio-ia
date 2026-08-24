@@ -1,0 +1,15 @@
+# Segredos - nunca commitar
+.env
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# Script auxiliar usado só durante o desenvolvimento (não faz parte da entrega)
+_build_notebook.py
+
+# Sistema
+.DS_Store

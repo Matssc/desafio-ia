@@ -1,0 +1,23 @@
+candidato: "SEU NOME AQUI"
+modelo_usado: gemini-2.0-flash
+provedor: google-ai-studio
+horas_dedicadas: 0
+
+nivel_1:
+  limpeza_dados:      {status: nao_feito, plano: "pendente"}
+  regras_pandas:      {status: nao_feito, plano: "pendente"}
+  validacao_regras:   {status: nao_feito, plano: "pendente"}
+  saida_estruturada:  {status: nao_feito, plano: "pendente"}
+  comparacao_prompts: {status: nao_feito, plano: "pendente"}
+
+nivel_2:
+  regras_em_escala: {status: nao_feito, plano: "pendente"}
+  ferramentas:      {status: nao_feito, plano: "pendente"}
+  agente:           {status: nao_feito, plano: "pendente"}
+  lote:             {status: nao_feito, plano: "pendente"}
+  confronto:        {status: nao_feito, plano: "pendente"}
+
+nivel_3:
+  trilha_escolhida: "nenhuma ainda"
+  status: nao_feito
+  plano: "a decidir conforme tempo restante"
