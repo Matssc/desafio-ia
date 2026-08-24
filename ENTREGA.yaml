@@ -4,11 +4,11 @@ provedor: google-ai-studio
 horas_dedicadas: 0
 
 nivel_1:
-  limpeza_dados:      {status: nao_feito, plano: "pendente"}
-  regras_pandas:      {status: nao_feito, plano: "pendente"}
-  validacao_regras:   {status: nao_feito, plano: "pendente"}
-  saida_estruturada:  {status: nao_feito, plano: "pendente"}
-  comparacao_prompts: {status: nao_feito, plano: "pendente"}
+  limpeza_dados:      {status: completo, onde: "nivel_1/nivel_1.ipynb, células 5-6"}
+  regras_pandas:      {status: completo, onde: "nivel_1/nivel_1.ipynb, células 9-10"}
+  validacao_regras:   {status: completo, onde: "nivel_1/nivel_1.ipynb, célula 11"}
+  saida_estruturada:  {status: completo, onde: "nivel_1/nivel_1.ipynb, células 14-17"}
+  comparacao_prompts: {status: completo, onde: "nivel_1/nivel_1.ipynb, células 18-21"}
 
 nivel_2:
   regras_em_escala: {status: nao_feito, plano: "pendente"}
