@@ -106,11 +106,36 @@ do modelo escolhido:
 
 ## Nível 3
 
+**Trilha escolhida: C — Interface conversacional. Por quê.**
+
+Das três trilhas (A — multiagente, B — servidor MCP, C — interface
+conversacional), a C foi escolhida por dois motivos práticos, dado o
+tempo restante do prazo de 24h:
+
+1. **Menor risco de retrabalho.** Ela reaproveita 100% da lógica já
+   testada e validada do Nível 2 (as 3 ferramentas, as declarações de
+   function calling, o loop de decisão) sem precisar redesenhar nada —
+   só muda a camada de interação (chat em vez de execução em lote).
+   As trilhas A e B exigiriam desenhar uma nova arquitetura do zero
+   (estado compartilhado entre agentes na A; um servidor stdio na B).
+
+2. **Valor demonstrável imediato.** Uma interface conversacional é
+   visualmente verificável na hora (dá pra ver o agente decidindo
+   ferramentas em tempo real, conversar livremente sobre um cliente,
+   comparar clientes diferentes na mesma conversa), o que facilita a
+   avaliação em comparação com um fluxo multiagente ou um protocolo
+   MCP que exigem mais contexto para serem "vistos" funcionando.
+
 **Interface conversacional (Streamlit) — completa e funcionando.**
 
 O código está em `nivel_3/app.py` e reaproveita integralmente a lógica
 do agente do Nível 2 (mesmas ferramentas, mesmas declarações de function
-calling) — nada foi duplicado.
+calling) — nada foi duplicado. Mantém memória da conversa por cliente
+via `st.session_state` (a conversa persiste mesmo trocando de cliente
+na sidebar e voltando). Como as funções de ferramenta aceitam qualquer
+`cliente_id` como parâmetro, o agente consegue investigar e comparar
+outros clientes além do selecionado na sidebar, caso a pergunta do
+analista peça isso — ex: "compare CLI-005 com CLI-014".
 
 **Problema real enfrentado e resolvido: SSL quebrado no Windows/Anaconda.**
 Ao instanciar o cliente `google-genai`, o Windows retornava
