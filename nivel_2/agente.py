@@ -28,7 +28,23 @@ from nivel_2.tools import historico_cliente, operacoes_do_dia, perfil_canal, _df
 load_dotenv()
 
 # ── Config ──────────────────────────────────────────────────────────────
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+# Em alguns ambientes Windows/Anaconda, a resolução de credenciais interna
+# do google-genai/google-auth pode deixar a variável de ambiente
+# SSL_CERT_FILE num estado inválido antes de cair no caminho manual de
+# criação do contexto SSL, causando FileNotFoundError mesmo com o
+# certificado do certifi existindo normalmente. Forçamos essa variável
+# explicitamente ANTES de qualquer tentativa da biblioteca, garantindo
+# que o caminho usado seja sempre o correto.
+import certifi
+os.environ["SSL_CERT_FILE"] = certifi.where()
+
+try:
+    import truststore
+    truststore.extract_from_ssl()
+except ImportError:
+    pass
+
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"), vertexai=False)
 MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 OUTPUTS_DIR = Path("outputs")
 OUTPUTS_DIR.mkdir(exist_ok=True)
