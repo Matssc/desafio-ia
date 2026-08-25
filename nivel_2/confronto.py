@@ -35,6 +35,53 @@ def carregar_pareceres() -> pd.DataFrame:
     return pd.DataFrame(registros)
 
 
+def definir_risco_esperado(row) -> str:
+    """
+    Critério de correspondência entre regras determinísticas e risco esperado.
+
+    Justificativa do critério:
+    - Cliente sinalizado pelas DUAS regras simultaneamente (fracionamento E
+      valor atípico) → esperado ALTO. Duas tipologias distintas ativas ao
+      mesmo tempo é o cenário mais grave possível dentro do que as regras
+      conseguem enxergar.
+    - Cliente com 2+ sinalizações da Regra 2 (múltiplas operações atípicas,
+      não só uma) → esperado ALTO. Um valor atípico isolado pode ser
+      explicado por uma única transação fora do padrão; vários valores
+      atípicos sugerem um padrão recorrente, não um outlier pontual.
+    - Cliente com exatamente 1 sinalização (seja Regra 1 OU Regra 2 com
+      1 operação) → esperado MÉDIO. É motivo suficiente para investigar,
+      mas isoladamente não justifica classificação máxima sem mais contexto.
+    - Cliente sem nenhuma sinalização → esperado BAIXO (não se aplica aos
+      10 clientes analisados aqui, já que todos foram pré-filtrados por
+      terem ao menos 1 sinalização).
+    """
+    tem_regra1 = row["flags_regra1"] >= 1
+    n_regra2 = row["flags_regra2"]
+
+    if tem_regra1 and n_regra2 >= 1:
+        return "alto"
+    if n_regra2 >= 2:
+        return "alto"
+    if tem_regra1 or n_regra2 == 1:
+        return "médio"
+    return "baixo"
+
+
+def calcular_concordancia(confronto: pd.DataFrame) -> tuple[pd.DataFrame, float]:
+    """
+    Aplica o critério de correspondência, compara com o risco do agente,
+    e calcula a taxa de concordância (% de clientes onde o agente
+    concordou com o que o critério baseado em regras esperava).
+    """
+    confronto = confronto.copy()
+    confronto["risco_esperado_pela_regra"] = confronto.apply(definir_risco_esperado, axis=1)
+    confronto["concorda"] = confronto["risco_esperado_pela_regra"] == confronto["nivel_risco_agente"]
+
+    taxa_concordancia = confronto["concorda"].mean() * 100
+
+    return confronto, taxa_concordancia
+
+
 def montar_confronto(df_operacoes: pd.DataFrame) -> pd.DataFrame:
     """
     Junta o resultado das regras determinísticas com o parecer do agente
@@ -132,22 +179,39 @@ if __name__ == "__main__":
     df = aplicar_regras(df)
 
     confronto = montar_confronto(df)
+    confronto, taxa_concordancia = calcular_concordancia(confronto)
 
-    # Salvar tabela de confronto
+    print(f"\n{'='*70}")
+    print("CRITÉRIO DE CORRESPONDÊNCIA E TAXA DE CONCORDÂNCIA")
+    print(f"{'='*70}")
+    print(definir_risco_esperado.__doc__)
+    print(f"\nTAXA DE CONCORDÂNCIA: {taxa_concordancia:.1f}% "
+          f"({int(confronto['concorda'].sum())}/{len(confronto)} clientes)")
+    print()
+    print(confronto[["cliente_id", "flags_regra1", "flags_regra2",
+                      "risco_esperado_pela_regra", "nivel_risco_agente", "concorda"]].to_string(index=False))
+
+    # Salvar tabela de confronto (agora incluindo critério e concordância)
     confronto_export = confronto[[
         "cliente_id", "flags_regra1", "flags_regra2", "total_sinalizacoes",
-        "volume_total_brl", "nivel_risco_agente", "tipologia_agente",
-        "n_red_flags", "n_ferramentas_chamadas"
+        "volume_total_brl", "risco_esperado_pela_regra", "nivel_risco_agente",
+        "concorda", "tipologia_agente", "n_red_flags", "n_ferramentas_chamadas"
     ]]
     confronto_path = OUTPUTS_DIR / "confronto_regra_vs_agente.csv"
     confronto_export.to_csv(confronto_path, index=False)
-    print(f"Tabela de confronto salva em {confronto_path}")
+    print(f"\nTabela de confronto salva em {confronto_path}")
 
-    # Gerar e salvar análise textual
+    # Gerar e salvar análise textual (divergências qualitativas)
     analise = analisar_divergencias(confronto)
+    analise_completa = (
+        f"TAXA DE CONCORDÂNCIA: {taxa_concordancia:.1f}% "
+        f"({int(confronto['concorda'].sum())}/{len(confronto)} clientes)\n\n"
+        f"Critério de correspondência usado:\n{definir_risco_esperado.__doc__}\n\n"
+        + analise
+    )
     print("\n" + analise)
 
     analise_path = OUTPUTS_DIR / "confronto_analise.txt"
     with open(analise_path, "w", encoding="utf-8") as f:
-        f.write(analise)
+        f.write(analise_completa)
     print(f"\nAnálise salva em {analise_path}")

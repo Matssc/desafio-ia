@@ -44,6 +44,22 @@ resolveu em 3 chamadas / 4.31s, enquanto CLI-005 precisou de 5 chamadas
 (3 dias diferentes investigados) / 32.14s. Um script fixo geraria o mesmo
 padrão de chamadas para todo cliente; o agente não gerou.
 
+**Critério de correspondência regra → risco esperado, e taxa de
+concordância.** Definido em `nivel_2/confronto.py::definir_risco_esperado()`:
+- Ambas as regras ativas simultaneamente → esperado **alto**
+- Regra 2 com 2+ operações atípicas (padrão recorrente, não outlier
+  pontual) → esperado **alto**
+- Exatamente 1 sinalização (qualquer regra) → esperado **médio**
+- Nenhuma sinalização → esperado **baixo** (não se aplica aos 10
+  clientes analisados, todos pré-filtrados por já terem ≥1 sinalização)
+
+Resultado real: **taxa de concordância de 50% (5/10 clientes)** entre
+o que esse critério simples previa e o que o agente de fato atribuiu.
+Isso reforça o achado abaixo — metade dos casos, o agente discordou do
+critério baseado só em contagem de regras, e as divergências (como as
+descritas a seguir) sugerem que o agente está certo com mais frequência
+do que o critério simples, não o contrário.
+
 **Achado do confronto: contagem de regras não prediz o risco do agente.**
 Rodando `nivel_2/confronto.py` sobre os 10 pareceres reais:
 - CLI-014 tem o MAIOR número de sinalizações (3× Regra 2), mas o agente

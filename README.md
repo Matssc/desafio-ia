@@ -22,6 +22,21 @@ combinando **regras determinísticas** (cálculo, em pandas) com um **LLM**
 └── .env.example
 ```
 
+## O que foi concluído
+
+Pipeline completo de triagem PLD/FT com os 3 níveis funcionando:
+regras determinísticas em pandas, agente com function calling decidindo
+quais ferramentas investigar por cliente, e interface conversacional
+para o analista explorar os casos.
+
+**Achado principal:** ao confrontar um critério simples baseado só na
+contagem de sinalizações das regras com o risco atribuído pelo agente,
+a taxa de concordância foi de apenas **50%** (5 de 10 clientes). Nas
+divergências, o agente considerou contexto que a regra sozinha não
+enxerga — concentração temporal, natureza das contrapartes, uso de
+espécie, coerência entre canal e perfil declarado. Detalhes e exemplos
+concretos em `docs/DECISOES.md`.
+
 ## Como rodar
 
 ```bash
