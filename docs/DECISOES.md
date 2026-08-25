@@ -163,6 +163,15 @@ também mexe no módulo `ssl`), e desabilitar a resolução de credenciais
 Vertex AI (`vertexai=False`, já que a autenticação é por API key direta).
 Testado e confirmado funcionando no Windows após a correção.
 
+**Capturas da interface em funcionamento** (`outputs/`):
+- `nivel3_sidebar.png` — tela inicial, cliente selecionado e regras
+  determinísticas exibidas na sidebar
+- `nivel3_chat.png` — conversa livre: pergunta "por que esse cliente
+  foi sinalizado?", resposta do agente citando a Regra 2 e o histórico
+  do cliente, com a ferramenta usada (`historico_cliente`) exibida
+- `nivel3_parecer.png` — parecer formal gerado pelo botão dedicado,
+  com nível de risco, red flags, justificativa e contagem de tokens
+
 ## Limitações gerais
 
 - **Amostra pequena para validar estatisticamente as regras.** Com 6
