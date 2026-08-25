@@ -1,23 +1,48 @@
-candidato: "SEU NOME AQUI"
+candidato: "Mateus Soares Costa"
 modelo_usado: "gemini-3.6-flash (Nível 1) e gemini-3.1-flash-lite (Nível 2) — ver docs/DECISOES.md"
 provedor: google-ai-studio
-horas_dedicadas: 0
+horas_dedicadas: 10
 
 nivel_1:
-  limpeza_dados:      {status: completo, onde: "nivel_1/nivel_1.ipynb, células 5-6"}
-  regras_pandas:      {status: completo, onde: "nivel_1/nivel_1.ipynb, células 9-10"}
-  validacao_regras:   {status: completo, onde: "nivel_1/nivel_1.ipynb, célula 11"}
-  saida_estruturada:  {status: completo, onde: "nivel_1/nivel_1.ipynb, células 14-17"}
-  comparacao_prompts: {status: completo, onde: "nivel_1/nivel_1.ipynb, células 18-21"}
+  limpeza_dados:
+    { status: completo, onde: "nivel_1/nivel_1.ipynb, células 5-6" }
+  regras_pandas:
+    { status: completo, onde: "nivel_1/nivel_1.ipynb, células 9-10" }
+  validacao_regras:
+    { status: completo, onde: "nivel_1/nivel_1.ipynb, célula 11" }
+  saida_estruturada:
+    { status: completo, onde: "nivel_1/nivel_1.ipynb, células 14-17" }
+  comparacao_prompts:
+    { status: completo, onde: "nivel_1/nivel_1.ipynb, células 18-21" }
 
 nivel_2:
-  regras_em_escala: {status: completo, onde: "nivel_2/utils.py — aplicar_regras() reaproveita a lógica do Nível 1 sobre dados_nivel_2.json (317 ops válidas, 30 clientes)"}
-  ferramentas:      {status: completo, onde: "nivel_2/tools.py — historico_cliente(), operacoes_do_dia(), perfil_canal()"}
-  agente:           {status: completo, onde: "nivel_2/agente.py — function calling nativo do Gemini, agente decide quais ferramentas chamar por cliente"}
-  lote:             {status: completo, onde: "outputs/parecer_*.json (10 clientes), outputs/resumo_lote.csv/.json"}
-  confronto:        {status: completo, onde: "nivel_2/confronto.py, outputs/confronto_regra_vs_agente.csv, outputs/confronto_analise.txt"}
+  regras_em_escala:
+    {
+      status: completo,
+      onde: "nivel_2/utils.py — aplicar_regras() reaproveita a lógica do Nível 1 sobre dados_nivel_2.json (317 ops válidas, 30 clientes)",
+    }
+  ferramentas:
+    {
+      status: completo,
+      onde: "nivel_2/tools.py — historico_cliente(), operacoes_do_dia(), perfil_canal()",
+    }
+  agente:
+    {
+      status: completo,
+      onde: "nivel_2/agente.py — function calling nativo do Gemini, agente decide quais ferramentas chamar por cliente",
+    }
+  lote:
+    {
+      status: completo,
+      onde: "outputs/parecer_*.json (10 clientes), outputs/resumo_lote.csv/.json",
+    }
+  confronto:
+    {
+      status: completo,
+      onde: "nivel_2/confronto.py, outputs/confronto_regra_vs_agente.csv, outputs/confronto_analise.txt",
+    }
 
 nivel_3:
-  trilha_escolhida: "nenhuma ainda"
-  status: nao_feito
-  plano: "a decidir conforme tempo restante"
+  trilha_escolhida: "Interface conversacional (Streamlit)"
+  status: completo
+  plano: "nivel_3/app.py — chat livre sobre cliente selecionado, reaproveitando 100% da lógica do agente do Nível 2. Testado e funcionando após corrigir um problema de SSL específico do Windows/Anaconda (detalhado em docs/DECISOES.md)."

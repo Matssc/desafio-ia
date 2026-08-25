@@ -106,7 +106,37 @@ do modelo escolhido:
 
 ## Nível 3
 
-_(preencher conforme avançamos)_
+**Interface conversacional (Streamlit) — completa e funcionando.**
+
+O código está em `nivel_3/app.py` e reaproveita integralmente a lógica
+do agente do Nível 2 (mesmas ferramentas, mesmas declarações de function
+calling) — nada foi duplicado.
+
+**Problema real enfrentado e resolvido: SSL quebrado no Windows/Anaconda.**
+Ao instanciar o cliente `google-genai`, o Windows retornava
+`FileNotFoundError` dentro de `ssl.create_default_context()`, mesmo com
+o certificado do `certifi` existindo normalmente no disco (confirmado
+com testes isolados). A mesma chamada funcionava sem problema nos
+notebooks do Nível 1 e no `python -m nivel_2.agente` executado via
+Jupyter — só falhava ao rodar via `streamlit run` num terminal comum.
+
+Diagnóstico, por eliminação:
+1. `ssl.create_default_context(cafile=certifi.where())` isolado → funciona.
+2. Mesmo teste após `import google.genai` → também funciona.
+3. Só falha ao **instanciar** `genai.Client(...)` de fato.
+
+Isso indicou que algo na resolução interna de credenciais do
+`google-genai`/`google-auth` (visível no log como
+`Failed to get default SSL context from google-auth`) deixa a variável
+de ambiente `SSL_CERT_FILE` num estado inválido antes de cair no
+caminho manual de criação do contexto SSL.
+
+**Correção aplicada em `nivel_2/agente.py`:** forçar `SSL_CERT_FILE`
+explicitamente para o caminho do `certifi` antes de criar o cliente,
+reverter qualquer patch do `truststore` (dependência do conda que
+também mexe no módulo `ssl`), e desabilitar a resolução de credenciais
+Vertex AI (`vertexai=False`, já que a autenticação é por API key direta).
+Testado e confirmado funcionando no Windows após a correção.
 
 ## Limitações gerais
 
@@ -134,19 +164,28 @@ _(preencher conforme avançamos)_
   não há checagem de que `nivel_risco` seja de fato coerente com os
   `red_flags` listados. Isso ficaria a cargo de um revisor humano.
 
+- **Fragilidade de SSL em Windows/Anaconda com o SDK `google-genai`.**
+  Como detalhado na seção do Nível 3, essa combinação específica pode
+  causar `FileNotFoundError` ao instanciar o cliente, mesmo com o
+  certificado presente e correto no disco. A correção já está aplicada
+  em `nivel_2/agente.py` (força `SSL_CERT_FILE`, reverte patch do
+  `truststore`, desabilita resolução Vertex AI), mas é uma fragilidade
+  de ambiente que pode se repetir em outras máquinas Windows com
+  configuração semelhante.
+
 ## O que faria com mais tempo
 
-- **Nível 3**: implementar a trilha multiagente (Triador → Investigador →
-  Redator), separando a decisão de "vale investigar" da redação do parecer
-  final — isso permitiria auditar cada etapa isoladamente.
+- **Multiagente** (Triador → Investigador → Redator) como evolução do
+  Nível 3 atual, separando a decisão de "vale investigar" da redação do
+  parecer final — permitiria auditar cada etapa isoladamente.
 - **Calibração dos limiares das regras** contra uma base histórica maior,
   se disponível, em vez de usar os valores fixos do enunciado.
 - **Ferramenta de rede de contrapartes**: permitir ao agente perguntar
   "quais outros clientes transacionam com esta mesma contraparte?" —
   útil para detectar estruturas de lavagem que envolvem múltiplas contas.
-- **Re-executar o Nível 2 inteiro com o mesmo modelo do Nível 1**
-  (`gemini-3.6-flash`) caso a cota permita no futuro, para eliminar a
-  inconsistência de usar dois modelos diferentes entre os níveis.
 - **Testes automatizados** (pytest) para `aplicar_regra1_fracionamento()`
   e `aplicar_regra2_valor_atipico()`, cobrindo os casos-limite já
   explorados manualmente na validação do Nível 1.
+- **Investigar a causa raiz exata do bug de SSL** (Nível 3) dentro do
+  código-fonte do `google-genai`/`google-auth`, em vez de contornar via
+  variável de ambiente — útil para reportar o problema upstream.
