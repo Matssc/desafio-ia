@@ -1,0 +1,11 @@
+cliente_id,flags_regra1,flags_regra2,total_sinalizacoes,volume_total_brl,nivel_risco_agente,tipologia_agente,n_red_flags,n_ferramentas_chamadas
+CLI-014,0,3,3,80629.99,médio,Movimentação incompatível com o perfil transacional e uso de contrapartes de risco,3,5
+CLI-023,0,2,2,148535.016,médio,Movimentação atípica de numerário e uso de canais de alto risco,3,3
+CLI-028,0,2,2,88750.8,médio,Movimentação atípica incompatível com o perfil transacional,3,3
+CLI-013,0,2,2,81730.99,alto,Movimentação incompatível com o perfil e possível passagem de recursos (pass-through),4,3
+CLI-005,0,2,2,64742.66,alto,Movimentação atípica de recursos com uso de espécie e concentração em transações de alto valor incompatíveis com o perfil transacional.,3,5
+CLI-026,0,2,2,54729.28,alto,Movimentação atípica incompatível com o perfil e uso de numerário,3,3
+CLI-001,0,2,2,47947.81,alto,Movimentação atípica de numerário (espécie) incompatível com o perfil transacional,3,5
+CLI-029,1,0,1,191385.766,alto,Fracionamento de operações e movimentação incompatível com perfil de varejo,4,3
+CLI-017,1,0,1,121391.37,médio,Possível estruturação de operações para ocultar movimentação financeira ou evitar controles de monitoramento.,3,3
+CLI-030,0,1,1,117780.886,alto,Movimentação incompatível com o perfil e uso de numerário,4,3

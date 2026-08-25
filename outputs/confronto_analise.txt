@@ -1,0 +1,38 @@
+======================================================================
+ANÁLISE DE DIVERGÊNCIAS: contagem de regras vs. risco do agente
+======================================================================
+
+Cliente    Regra1  Regra2  Total   Risco (agente) 
+-------------------------------------------------------
+CLI-014    0       3       3       médio          
+CLI-023    0       2       2       médio          
+CLI-028    0       2       2       médio          
+CLI-013    0       2       2       alto           
+CLI-005    0       2       2       alto           
+CLI-026    0       2       2       alto           
+CLI-001    0       2       2       alto           
+CLI-029    1       0       1       alto           
+CLI-017    1       0       1       médio          
+CLI-030    0       1       1       alto           
+
+Cliente(s) com MAIS sinalizações (3): CLI-014
+  → Risco atribuído: médio
+
+Clientes com POUCAS sinalizações (≤1) mas risco 'alto' atribuído pelo agente:
+  - CLI-029: 3 ferramentas chamadas, tipologia: Fracionamento de operações e movimentação incompatível com perfil de varejo
+  - CLI-030: 3 ferramentas chamadas, tipologia: Movimentação incompatível com o perfil e uso de numerário
+
+Clientes que ativaram a MESMA regra (Regra 1 - fracionamento) mas receberam riscos DIFERENTES do agente:
+  - CLI-029: risco 'alto'
+  - CLI-017: risco 'médio'
+  → Evidência de que o agente pondera contexto além da regra que disparou (ex: canais usados, concentração de contrapartes).
+
+CONCLUSÃO:
+A contagem bruta de sinalizações das regras determinísticas NÃO prediz
+linearmente o nível de risco atribuído pelo agente. Isso é esperado e
+desejável: as regras são um gatilho para investigação (correto e barato
+de calcular), mas a gravidade real depende de contexto que só aparece ao
+investigar — concentração temporal, natureza das contrapartes, uso de
+espécie, coerência entre canal e perfil declarado. É exatamente essa
+divisão de trabalho (regra decide QUEM investigar, LLM decide QUÃO GRAVE)
+que o desafio pede.
