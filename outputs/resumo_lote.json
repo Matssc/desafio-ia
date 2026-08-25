@@ -1,0 +1,427 @@
+[
+  {
+    "cliente_id": "CLI-014",
+    "parecer": {
+      "nivel_risco": "médio",
+      "tipologia_suspeita": "Movimentação incompatível com o perfil transacional e uso de contrapartes de risco",
+      "red_flags": [
+        "Operações de valor atípico (Regra 2)",
+        "Recebimento de valores elevados via PIX de empresas de assessoria (possível uso de conta de passagem)",
+        "Diversidade de contrapartes (Trading, Transportes, Assessoria) sem clareza de relação comercial"
+      ],
+      "justificativa": "O cliente apresenta um volume total de R$ 80.629,99 em apenas 11 operações, com uma mediana por operação de R$ 2.308,41. A ativação da Regra 2 (valor atípico) é corroborada pela análise das operações, onde se observa o recebimento de valores significativos (ex: R$ 13.660,65 via PIX de uma empresa de assessoria) que destoam da mediana. A variedade de contrapartes, incluindo empresas de trading e assessoria, sugere uma atividade que não se alinha a um perfil de consumo ou varejo padrão, levantando suspeitas de uso da conta para transações de terceiros ou movimentação de recursos sem lastro comercial claro."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-014"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-014"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-01",
+          "cliente_id": "CLI-014"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-03",
+          "cliente_id": "CLI-014"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-05",
+          "cliente_id": "CLI-014"
+        }
+      }
+    ],
+    "tokens_entrada": 6965,
+    "tokens_saida": 470,
+    "tempo_segundos": 7.32,
+    "turnos": 6
+  },
+  {
+    "cliente_id": "CLI-023",
+    "parecer": {
+      "nivel_risco": "médio",
+      "tipologia_suspeita": "Movimentação atípica de numerário e uso de canais de alto risco",
+      "red_flags": [
+        "Operação em espécie de valor elevado (R$ 41.768,17)",
+        "Concentração de volume em TEDs para empresas de importação/trading",
+        "Ativação de regra de valor atípico"
+      ],
+      "justificativa": "Embora o volume total não seja excessivo, o cliente apresenta uma operação em espécie de valor relevante (quase 30% do volume total), o que é atípico para o perfil de transações eletrônicas (TED/Boleto). Além disso, a pulverização de contrapartes (diversas empresas de importação e trading) sem uma lógica comercial clara, somada à ativação da regra de valor atípico, justifica o monitoramento reforçado para verificar a origem dos recursos e a natureza das relações comerciais."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-023"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "cliente_id": "CLI-023",
+          "data": "2026-04-13"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-023"
+        }
+      }
+    ],
+    "tokens_entrada": 4042,
+    "tokens_saida": 322,
+    "tempo_segundos": 71.43,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-028",
+    "parecer": {
+      "nivel_risco": "médio",
+      "tipologia_suspeita": "Movimentação atípica incompatível com o perfil transacional",
+      "red_flags": [
+        "Concentração de volume financeiro em operações atípicas (Regra 2)",
+        "Uso de TED para movimentação de valores significativos em curto intervalo (21/03)",
+        "Contrapartes com nomes genéricos (Trading, Assessoria, Distribuidora) sugerindo possível uso de conta de passagem"
+      ],
+      "justificativa": "O cliente apresenta um volume total de R$ 88.750,80 em apenas 12 operações. A análise detalhada do dia 21/03 revelou duas operações via TED que, somadas, representam quase 60% do volume total do período, com valores (R$ 27,7k e R$ 24,8k) muito superiores à mediana das operações (R$ 4,4k). O perfil de canal é predominantemente de TED (quase 70% do volume), o que, aliado à natureza das contrapartes, levanta suspeitas sobre a finalidade econômica das transações."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-028"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-21",
+          "cliente_id": "CLI-028"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-028"
+        }
+      }
+    ],
+    "tokens_entrada": 4049,
+    "tokens_saida": 365,
+    "tempo_segundos": 46.22,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-013",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Movimentação incompatível com o perfil e possível passagem de recursos (pass-through)",
+      "red_flags": [
+        "Operações atípicas de alto valor concentradas em um único dia (2026-03-06)",
+        "Movimentação financeira incompatível com a mediana de R$ 3.146,22",
+        "Uso de TED para entrada e saída de valores vultosos no mesmo dia, sugerindo conta de passagem",
+        "Diversidade excessiva de contrapartes (10 operações com 10 contrapartes diferentes)"
+      ],
+      "justificativa": "O cliente apresenta um padrão de movimentação altamente suspeito. Embora o volume total não seja extremamente elevado, a concentração de R$ 55.241,99 (cerca de 68% do volume total) em apenas duas operações de TED no dia 2026-03-06, com contrapartes distintas, destoa completamente da mediana de suas operações (R$ 3.146,22). A utilização de 10 contrapartes diferentes para apenas 10 operações reforça a hipótese de que a conta está sendo utilizada como veículo de passagem de recursos para terceiros, sem uma finalidade econômica clara ou aderente ao perfil transacional esperado."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-013"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "cliente_id": "CLI-013",
+          "data": "2026-03-06"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-013"
+        }
+      }
+    ],
+    "tokens_entrada": 4060,
+    "tokens_saida": 405,
+    "tempo_segundos": 4.31,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-005",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Movimentação atípica de recursos com uso de espécie e concentração em transações de alto valor incompatíveis com o perfil transacional.",
+      "red_flags": [
+        "Uso de espécie (cash) para movimentações de alto valor (R$ 15.013,22 - 23,2% do volume total).",
+        "Operação de cartão de crédito com valor significativamente superior à mediana (R$ 30.743,97 vs mediana de R$ 2.144,18).",
+        "Concentração de volume financeiro em poucas operações (48,1% do volume em apenas 2 operações de cartão)."
+      ],
+      "justificativa": "O cliente apresenta um padrão de movimentação inconsistente com a mediana de suas operações. A utilização de espécie para valores expressivos, somada a uma transação de cartão de crédito de R$ 30.743,97 (quase 50% do volume total), levanta suspeitas sobre a origem dos fundos e a natureza comercial das transações, visto que o cliente opera com diversas contrapartes de trading e comércio sem uma lógica clara de fluxo de caixa."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-005"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-005"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-14",
+          "cliente_id": "CLI-005"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-17",
+          "cliente_id": "CLI-005"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-04-01",
+          "cliente_id": "CLI-005"
+        }
+      }
+    ],
+    "tokens_entrada": 7239,
+    "tokens_saida": 459,
+    "tempo_segundos": 32.14,
+    "turnos": 6
+  },
+  {
+    "cliente_id": "CLI-026",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Movimentação atípica incompatível com o perfil e uso de numerário",
+      "red_flags": [
+        "Operação de valor atípico (R$ 21.261,01 via PIX) destoante da mediana de R$ 2.032,93",
+        "Uso expressivo de espécie (41,7% das operações), sugerindo tentativa de ocultação de origem de recursos",
+        "Concentração de volume financeiro em poucas operações de alto valor (PIX e Cartão)"
+      ],
+      "justificativa": "O cliente apresenta um padrão de movimentação inconsistente. Embora a regra de fracionamento não tenha sido ativada, a análise detalhada revela que o volume financeiro está concentrado em poucas operações de alto valor (especialmente uma transferência PIX de R$ 21,2 mil, que representa quase 40% do volume total do período). Além disso, a alta frequência de operações em espécie (5 de 12) é um forte indicador de risco de lavagem de dinheiro, visto que o uso de numerário dificulta o rastreamento do fluxo financeiro."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-026"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-05-17",
+          "cliente_id": "CLI-026"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-026"
+        }
+      }
+    ],
+    "tokens_entrada": 4075,
+    "tokens_saida": 370,
+    "tempo_segundos": 26.17,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-001",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Movimentação atípica de numerário (espécie) incompatível com o perfil transacional",
+      "red_flags": [
+        "Depósito de alto valor em espécie (R$ 25.110,15) representando mais de 50% do volume total movimentado pelo cliente.",
+        "Incompatibilidade entre o canal de movimentação (espécie) e o perfil de transações recorrentes (TED/Cartão).",
+        "Operação atípica identificada pela Regra 2, confirmada por análise manual como um aporte de numerário sem justificativa clara de origem."
+      ],
+      "justificativa": "O cliente apresenta um padrão de movimentação majoritariamente eletrônico (TED e Cartão), com mediana por operação de R$ 1.609,15. A ocorrência de uma operação única em espécie no valor de R$ 25.110,15 destoa completamente do comportamento habitual, configurando um forte indício de movimentação de recursos de origem não declarada ou incompatível com a atividade econômica do cliente."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-001"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-001"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-06",
+          "cliente_id": "CLI-001"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "cliente_id": "CLI-001",
+          "data": "2026-03-12"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-03-15",
+          "cliente_id": "CLI-001"
+        }
+      }
+    ],
+    "tokens_entrada": 7121,
+    "tokens_saida": 433,
+    "tempo_segundos": 13.39,
+    "turnos": 6
+  },
+  {
+    "cliente_id": "CLI-029",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Fracionamento de operações e movimentação incompatível com perfil de varejo",
+      "red_flags": [
+        "Fracionamento de operações (Regra 1 ativada)",
+        "Uso de múltiplas contrapartes distintas em curto período",
+        "Movimentação de valores elevados (R$ 191k em menos de 3 meses) com uso de espécie (R$ 14.9k)",
+        "Concentração de volume em TED (72.2%) com contrapartes de natureza comercial/importação, sugerindo possível conta de passagem"
+      ],
+      "justificativa": "O cliente apresenta um padrão de movimentação altamente suspeito. Em um período de menos de 3 meses, movimentou R$ 191 mil com 15 contrapartes diferentes, o que é atípico para um perfil de varejo. A análise do dia 2026-05-26 confirma o fracionamento, com 4 operações de valores próximos (média de R$ 17.8k) realizadas via diferentes canais (TED e PIX) com contrapartes distintas. A utilização de espécie somada à alta rotatividade de contrapartes reforça a suspeita de utilização da conta para ocultação de origem de recursos ou lavagem de dinheiro."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-029"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "data": "2026-05-26",
+          "cliente_id": "CLI-029"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-029"
+        }
+      }
+    ],
+    "tokens_entrada": 4271,
+    "tokens_saida": 401,
+    "tempo_segundos": 57.58,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-017",
+    "parecer": {
+      "nivel_risco": "médio",
+      "tipologia_suspeita": "Possível estruturação de operações para ocultar movimentação financeira ou evitar controles de monitoramento.",
+      "red_flags": [
+        "Fracionamento de operações (Regra 1 ativada)",
+        "Concentração de 4 operações em um único dia (2026-03-08) totalizando R$ 64.673,88 (mais de 50% do volume total do período)",
+        "Uso de múltiplos canais (PIX, TED, espécie, boleto) sem uma lógica de negócio clara para um cliente com volume total moderado"
+      ],
+      "justificativa": "O cliente CLI-017 apresentou um padrão de movimentação concentrado em um curto espaço de tempo, com a realização de 4 operações em um único dia, o que disparou o alerta de fracionamento. Embora o volume total não seja excessivamente alto, a diversidade de canais (incluindo operações em espécie) combinada com a fragmentação dos valores sugere uma tentativa de evitar a detecção de padrões de fluxo financeiro. Recomenda-se monitoramento contínuo e solicitação de comprovação de origem dos fundos para as operações de maior valor."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-017"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "cliente_id": "CLI-017",
+          "data": "2026-03-08"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-017"
+        }
+      }
+    ],
+    "tokens_entrada": 4168,
+    "tokens_saida": 381,
+    "tempo_segundos": 20.23,
+    "turnos": 4
+  },
+  {
+    "cliente_id": "CLI-030",
+    "parecer": {
+      "nivel_risco": "alto",
+      "tipologia_suspeita": "Movimentação incompatível com o perfil e uso de numerário",
+      "red_flags": [
+        "Concentração de volume em TED (72,6%) com poucas operações",
+        "Uso de espécie para movimentações de valores relevantes",
+        "Operação atípica disparada pela regra de valor",
+        "Inconsistência entre o volume total (R$ 117k) e a natureza das contrapartes (diversas empresas de serviços/varejo sem padrão claro)"
+      ],
+      "justificativa": "O cliente apresenta um volume total de R$ 117.780,89 em apenas 9 operações, com uma mediana de R$ 4.611,07. A maior parte do volume (72,6%) está concentrada em apenas 2 TEDs, o que destoa da frequência de uso de outros canais. Além disso, a utilização de espécie (9,2% do volume) em um perfil que transaciona valores elevados via TED e PIX com diversas contrapartes jurídicas levanta suspeitas sobre a origem e o destino dos recursos, não sendo possível identificar uma atividade econômica clara que justifique esse padrão de movimentação."
+    },
+    "ferramentas_chamadas": [
+      {
+        "ferramenta": "historico_cliente",
+        "args": {
+          "cliente_id": "CLI-030"
+        }
+      },
+      {
+        "ferramenta": "operacoes_do_dia",
+        "args": {
+          "cliente_id": "CLI-030",
+          "data": "2026-05-19"
+        }
+      },
+      {
+        "ferramenta": "perfil_canal",
+        "args": {
+          "cliente_id": "CLI-030"
+        }
+      }
+    ],
+    "tokens_entrada": 4018,
+    "tokens_saida": 380,
+    "tempo_segundos": 21.31,
+    "turnos": 4
+  }
+]

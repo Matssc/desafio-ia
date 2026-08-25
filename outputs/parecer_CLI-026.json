@@ -1,0 +1,38 @@
+{
+  "cliente_id": "CLI-026",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Movimentação atípica incompatível com o perfil e uso de numerário",
+    "red_flags": [
+      "Operação de valor atípico (R$ 21.261,01 via PIX) destoante da mediana de R$ 2.032,93",
+      "Uso expressivo de espécie (41,7% das operações), sugerindo tentativa de ocultação de origem de recursos",
+      "Concentração de volume financeiro em poucas operações de alto valor (PIX e Cartão)"
+    ],
+    "justificativa": "O cliente apresenta um padrão de movimentação inconsistente. Embora a regra de fracionamento não tenha sido ativada, a análise detalhada revela que o volume financeiro está concentrado em poucas operações de alto valor (especialmente uma transferência PIX de R$ 21,2 mil, que representa quase 40% do volume total do período). Além disso, a alta frequência de operações em espécie (5 de 12) é um forte indicador de risco de lavagem de dinheiro, visto que o uso de numerário dificulta o rastreamento do fluxo financeiro."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-026"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-05-17",
+        "cliente_id": "CLI-026"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-026"
+      }
+    }
+  ],
+  "tokens_entrada": 4075,
+  "tokens_saida": 370,
+  "tempo_segundos": 26.17,
+  "turnos": 4
+}

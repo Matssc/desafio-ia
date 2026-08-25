@@ -1,0 +1,52 @@
+{
+  "cliente_id": "CLI-005",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Movimentação atípica de recursos com uso de espécie e concentração em transações de alto valor incompatíveis com o perfil transacional.",
+    "red_flags": [
+      "Uso de espécie (cash) para movimentações de alto valor (R$ 15.013,22 - 23,2% do volume total).",
+      "Operação de cartão de crédito com valor significativamente superior à mediana (R$ 30.743,97 vs mediana de R$ 2.144,18).",
+      "Concentração de volume financeiro em poucas operações (48,1% do volume em apenas 2 operações de cartão)."
+    ],
+    "justificativa": "O cliente apresenta um padrão de movimentação inconsistente com a mediana de suas operações. A utilização de espécie para valores expressivos, somada a uma transação de cartão de crédito de R$ 30.743,97 (quase 50% do volume total), levanta suspeitas sobre a origem dos fundos e a natureza comercial das transações, visto que o cliente opera com diversas contrapartes de trading e comércio sem uma lógica clara de fluxo de caixa."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-005"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-005"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-14",
+        "cliente_id": "CLI-005"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-17",
+        "cliente_id": "CLI-005"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-04-01",
+        "cliente_id": "CLI-005"
+      }
+    }
+  ],
+  "tokens_entrada": 7239,
+  "tokens_saida": 459,
+  "tempo_segundos": 32.14,
+  "turnos": 6
+}

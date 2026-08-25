@@ -1,0 +1,39 @@
+{
+  "cliente_id": "CLI-030",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Movimentação incompatível com o perfil e uso de numerário",
+    "red_flags": [
+      "Concentração de volume em TED (72,6%) com poucas operações",
+      "Uso de espécie para movimentações de valores relevantes",
+      "Operação atípica disparada pela regra de valor",
+      "Inconsistência entre o volume total (R$ 117k) e a natureza das contrapartes (diversas empresas de serviços/varejo sem padrão claro)"
+    ],
+    "justificativa": "O cliente apresenta um volume total de R$ 117.780,89 em apenas 9 operações, com uma mediana de R$ 4.611,07. A maior parte do volume (72,6%) está concentrada em apenas 2 TEDs, o que destoa da frequência de uso de outros canais. Além disso, a utilização de espécie (9,2% do volume) em um perfil que transaciona valores elevados via TED e PIX com diversas contrapartes jurídicas levanta suspeitas sobre a origem e o destino dos recursos, não sendo possível identificar uma atividade econômica clara que justifique esse padrão de movimentação."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-030"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "cliente_id": "CLI-030",
+        "data": "2026-05-19"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-030"
+      }
+    }
+  ],
+  "tokens_entrada": 4018,
+  "tokens_saida": 380,
+  "tempo_segundos": 21.31,
+  "turnos": 4
+}

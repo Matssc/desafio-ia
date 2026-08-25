@@ -1,0 +1,52 @@
+{
+  "cliente_id": "CLI-014",
+  "parecer": {
+    "nivel_risco": "médio",
+    "tipologia_suspeita": "Movimentação incompatível com o perfil transacional e uso de contrapartes de risco",
+    "red_flags": [
+      "Operações de valor atípico (Regra 2)",
+      "Recebimento de valores elevados via PIX de empresas de assessoria (possível uso de conta de passagem)",
+      "Diversidade de contrapartes (Trading, Transportes, Assessoria) sem clareza de relação comercial"
+    ],
+    "justificativa": "O cliente apresenta um volume total de R$ 80.629,99 em apenas 11 operações, com uma mediana por operação de R$ 2.308,41. A ativação da Regra 2 (valor atípico) é corroborada pela análise das operações, onde se observa o recebimento de valores significativos (ex: R$ 13.660,65 via PIX de uma empresa de assessoria) que destoam da mediana. A variedade de contrapartes, incluindo empresas de trading e assessoria, sugere uma atividade que não se alinha a um perfil de consumo ou varejo padrão, levantando suspeitas de uso da conta para transações de terceiros ou movimentação de recursos sem lastro comercial claro."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-014"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-014"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-01",
+        "cliente_id": "CLI-014"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-03",
+        "cliente_id": "CLI-014"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-05",
+        "cliente_id": "CLI-014"
+      }
+    }
+  ],
+  "tokens_entrada": 6965,
+  "tokens_saida": 470,
+  "tempo_segundos": 7.32,
+  "turnos": 6
+}

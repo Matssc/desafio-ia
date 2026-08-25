@@ -1,0 +1,39 @@
+{
+  "cliente_id": "CLI-013",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Movimentação incompatível com o perfil e possível passagem de recursos (pass-through)",
+    "red_flags": [
+      "Operações atípicas de alto valor concentradas em um único dia (2026-03-06)",
+      "Movimentação financeira incompatível com a mediana de R$ 3.146,22",
+      "Uso de TED para entrada e saída de valores vultosos no mesmo dia, sugerindo conta de passagem",
+      "Diversidade excessiva de contrapartes (10 operações com 10 contrapartes diferentes)"
+    ],
+    "justificativa": "O cliente apresenta um padrão de movimentação altamente suspeito. Embora o volume total não seja extremamente elevado, a concentração de R$ 55.241,99 (cerca de 68% do volume total) em apenas duas operações de TED no dia 2026-03-06, com contrapartes distintas, destoa completamente da mediana de suas operações (R$ 3.146,22). A utilização de 10 contrapartes diferentes para apenas 10 operações reforça a hipótese de que a conta está sendo utilizada como veículo de passagem de recursos para terceiros, sem uma finalidade econômica clara ou aderente ao perfil transacional esperado."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-013"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "cliente_id": "CLI-013",
+        "data": "2026-03-06"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-013"
+      }
+    }
+  ],
+  "tokens_entrada": 4060,
+  "tokens_saida": 405,
+  "tempo_segundos": 4.31,
+  "turnos": 4
+}

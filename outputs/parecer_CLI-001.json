@@ -1,0 +1,52 @@
+{
+  "cliente_id": "CLI-001",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Movimentação atípica de numerário (espécie) incompatível com o perfil transacional",
+    "red_flags": [
+      "Depósito de alto valor em espécie (R$ 25.110,15) representando mais de 50% do volume total movimentado pelo cliente.",
+      "Incompatibilidade entre o canal de movimentação (espécie) e o perfil de transações recorrentes (TED/Cartão).",
+      "Operação atípica identificada pela Regra 2, confirmada por análise manual como um aporte de numerário sem justificativa clara de origem."
+    ],
+    "justificativa": "O cliente apresenta um padrão de movimentação majoritariamente eletrônico (TED e Cartão), com mediana por operação de R$ 1.609,15. A ocorrência de uma operação única em espécie no valor de R$ 25.110,15 destoa completamente do comportamento habitual, configurando um forte indício de movimentação de recursos de origem não declarada ou incompatível com a atividade econômica do cliente."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-001"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-001"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-06",
+        "cliente_id": "CLI-001"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "cliente_id": "CLI-001",
+        "data": "2026-03-12"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-15",
+        "cliente_id": "CLI-001"
+      }
+    }
+  ],
+  "tokens_entrada": 7121,
+  "tokens_saida": 433,
+  "tempo_segundos": 13.39,
+  "turnos": 6
+}

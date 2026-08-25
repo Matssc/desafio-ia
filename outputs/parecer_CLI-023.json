@@ -1,0 +1,38 @@
+{
+  "cliente_id": "CLI-023",
+  "parecer": {
+    "nivel_risco": "médio",
+    "tipologia_suspeita": "Movimentação atípica de numerário e uso de canais de alto risco",
+    "red_flags": [
+      "Operação em espécie de valor elevado (R$ 41.768,17)",
+      "Concentração de volume em TEDs para empresas de importação/trading",
+      "Ativação de regra de valor atípico"
+    ],
+    "justificativa": "Embora o volume total não seja excessivo, o cliente apresenta uma operação em espécie de valor relevante (quase 30% do volume total), o que é atípico para o perfil de transações eletrônicas (TED/Boleto). Além disso, a pulverização de contrapartes (diversas empresas de importação e trading) sem uma lógica comercial clara, somada à ativação da regra de valor atípico, justifica o monitoramento reforçado para verificar a origem dos recursos e a natureza das relações comerciais."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-023"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "cliente_id": "CLI-023",
+        "data": "2026-04-13"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-023"
+      }
+    }
+  ],
+  "tokens_entrada": 4042,
+  "tokens_saida": 322,
+  "tempo_segundos": 71.43,
+  "turnos": 4
+}

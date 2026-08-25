@@ -1,0 +1,39 @@
+{
+  "cliente_id": "CLI-029",
+  "parecer": {
+    "nivel_risco": "alto",
+    "tipologia_suspeita": "Fracionamento de operações e movimentação incompatível com perfil de varejo",
+    "red_flags": [
+      "Fracionamento de operações (Regra 1 ativada)",
+      "Uso de múltiplas contrapartes distintas em curto período",
+      "Movimentação de valores elevados (R$ 191k em menos de 3 meses) com uso de espécie (R$ 14.9k)",
+      "Concentração de volume em TED (72.2%) com contrapartes de natureza comercial/importação, sugerindo possível conta de passagem"
+    ],
+    "justificativa": "O cliente apresenta um padrão de movimentação altamente suspeito. Em um período de menos de 3 meses, movimentou R$ 191 mil com 15 contrapartes diferentes, o que é atípico para um perfil de varejo. A análise do dia 2026-05-26 confirma o fracionamento, com 4 operações de valores próximos (média de R$ 17.8k) realizadas via diferentes canais (TED e PIX) com contrapartes distintas. A utilização de espécie somada à alta rotatividade de contrapartes reforça a suspeita de utilização da conta para ocultação de origem de recursos ou lavagem de dinheiro."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-029"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-05-26",
+        "cliente_id": "CLI-029"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-029"
+      }
+    }
+  ],
+  "tokens_entrada": 4271,
+  "tokens_saida": 401,
+  "tempo_segundos": 57.58,
+  "turnos": 4
+}

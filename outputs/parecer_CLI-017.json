@@ -1,0 +1,38 @@
+{
+  "cliente_id": "CLI-017",
+  "parecer": {
+    "nivel_risco": "médio",
+    "tipologia_suspeita": "Possível estruturação de operações para ocultar movimentação financeira ou evitar controles de monitoramento.",
+    "red_flags": [
+      "Fracionamento de operações (Regra 1 ativada)",
+      "Concentração de 4 operações em um único dia (2026-03-08) totalizando R$ 64.673,88 (mais de 50% do volume total do período)",
+      "Uso de múltiplos canais (PIX, TED, espécie, boleto) sem uma lógica de negócio clara para um cliente com volume total moderado"
+    ],
+    "justificativa": "O cliente CLI-017 apresentou um padrão de movimentação concentrado em um curto espaço de tempo, com a realização de 4 operações em um único dia, o que disparou o alerta de fracionamento. Embora o volume total não seja excessivamente alto, a diversidade de canais (incluindo operações em espécie) combinada com a fragmentação dos valores sugere uma tentativa de evitar a detecção de padrões de fluxo financeiro. Recomenda-se monitoramento contínuo e solicitação de comprovação de origem dos fundos para as operações de maior valor."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-017"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "cliente_id": "CLI-017",
+        "data": "2026-03-08"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-017"
+      }
+    }
+  ],
+  "tokens_entrada": 4168,
+  "tokens_saida": 381,
+  "tempo_segundos": 20.23,
+  "turnos": 4
+}

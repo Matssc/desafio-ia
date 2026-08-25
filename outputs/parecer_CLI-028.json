@@ -1,0 +1,38 @@
+{
+  "cliente_id": "CLI-028",
+  "parecer": {
+    "nivel_risco": "médio",
+    "tipologia_suspeita": "Movimentação atípica incompatível com o perfil transacional",
+    "red_flags": [
+      "Concentração de volume financeiro em operações atípicas (Regra 2)",
+      "Uso de TED para movimentação de valores significativos em curto intervalo (21/03)",
+      "Contrapartes com nomes genéricos (Trading, Assessoria, Distribuidora) sugerindo possível uso de conta de passagem"
+    ],
+    "justificativa": "O cliente apresenta um volume total de R$ 88.750,80 em apenas 12 operações. A análise detalhada do dia 21/03 revelou duas operações via TED que, somadas, representam quase 60% do volume total do período, com valores (R$ 27,7k e R$ 24,8k) muito superiores à mediana das operações (R$ 4,4k). O perfil de canal é predominantemente de TED (quase 70% do volume), o que, aliado à natureza das contrapartes, levanta suspeitas sobre a finalidade econômica das transações."
+  },
+  "ferramentas_chamadas": [
+    {
+      "ferramenta": "historico_cliente",
+      "args": {
+        "cliente_id": "CLI-028"
+      }
+    },
+    {
+      "ferramenta": "operacoes_do_dia",
+      "args": {
+        "data": "2026-03-21",
+        "cliente_id": "CLI-028"
+      }
+    },
+    {
+      "ferramenta": "perfil_canal",
+      "args": {
+        "cliente_id": "CLI-028"
+      }
+    }
+  ],
+  "tokens_entrada": 4049,
+  "tokens_saida": 365,
+  "tempo_segundos": 46.22,
+  "turnos": 4
+}

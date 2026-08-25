@@ -1,5 +1,5 @@
 candidato: "SEU NOME AQUI"
-modelo_usado: gemini-3.6-flash
+modelo_usado: "gemini-3.6-flash (Nível 1) e gemini-3.1-flash-lite (Nível 2) — ver docs/DECISOES.md"
 provedor: google-ai-studio
 horas_dedicadas: 0
 
