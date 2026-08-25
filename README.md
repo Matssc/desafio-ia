@@ -29,17 +29,29 @@ pip install -r requirements.txt
 cp .env.example .env   # preencha GOOGLE_API_KEY com sua própria chave
 ```
 
-- Nível 1: abra `nivel_1/nivel_1.ipynb` (já entregue com saídas executadas).
-- Nível 2: `python -m nivel_2.agente` (em construção).
+- **Nível 1**: abra `nivel_1/nivel_1.ipynb` (completo, com saídas executadas).
+- **Nível 2**:
+  - `python -m nivel_2.agente` — roda o agente sobre os 10 clientes mais sinalizados
+    (usa API, consome cota; resultados já estão salvos em `outputs/`)
+  - `python -m nivel_2.confronto` — compara regra vs. parecer do agente
+    (não usa API, só lê os pareceres já salvos)
+  - `python -m nivel_2.tools` — testa as 3 ferramentas isoladamente
+    (não usa API)
 
 ## Status
 
-Em desenvolvimento — acompanhe o progresso real em `ENTREGA.yaml`.
+- **Nível 1**: completo (limpeza, regras, validação, análise com LLM, comparação de prompts)
+- **Nível 2**: completo (regras em escala, ferramentas, agente, execução em lote, confronto)
+- **Nível 3**: não iniciado
+
+Detalhamento item a item em `ENTREGA.yaml`.
 
 ## Modelo e provedor
 
 - **Provedor:** Google AI Studio (camada gratuita)
-- **Modelo:** `gemini-3.6-flash`
+- **Modelos:** `gemini-3.6-flash` (Nível 1) e `gemini-3.1-flash-lite` (Nível 2)
 
-Escolhido pelo rate limit generoso na camada free e SDK oficial simples (`google-genai`),
-além de bom desempenho em tarefas de análise estruturada.
+Dois modelos diferentes por necessidade real de cota: o Nível 1 faz poucas
+chamadas (cabe na cota diária do 3.6-flash), enquanto o Nível 2 processa
+10 clientes em lote e precisa da cota diária maior do Flash-Lite. Detalhes
+em `docs/DECISOES.md`.
