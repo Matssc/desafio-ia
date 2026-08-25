@@ -11,11 +11,11 @@ nivel_1:
   comparacao_prompts: {status: completo, onde: "nivel_1/nivel_1.ipynb, células 18-21"}
 
 nivel_2:
-  regras_em_escala: {status: nao_feito, plano: "pendente"}
-  ferramentas:      {status: nao_feito, plano: "pendente"}
-  agente:           {status: nao_feito, plano: "pendente"}
-  lote:             {status: nao_feito, plano: "pendente"}
-  confronto:        {status: nao_feito, plano: "pendente"}
+  regras_em_escala: {status: completo, onde: "nivel_2/utils.py — aplicar_regras() reaproveita a lógica do Nível 1 sobre dados_nivel_2.json (317 ops válidas, 30 clientes)"}
+  ferramentas:      {status: completo, onde: "nivel_2/tools.py — historico_cliente(), operacoes_do_dia(), perfil_canal()"}
+  agente:           {status: completo, onde: "nivel_2/agente.py — function calling nativo do Gemini, agente decide quais ferramentas chamar por cliente"}
+  lote:             {status: completo, onde: "outputs/parecer_*.json (10 clientes), outputs/resumo_lote.csv/.json"}
+  confronto:        {status: completo, onde: "nivel_2/confronto.py, outputs/confronto_regra_vs_agente.csv, outputs/confronto_analise.txt"}
 
 nivel_3:
   trilha_escolhida: "nenhuma ainda"

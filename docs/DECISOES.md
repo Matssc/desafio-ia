@@ -4,9 +4,63 @@ Este documento registra trade-offs, limitações e planos — não repete o que 
 
 ## Nível 1
 
-_(preencher conforme avançamos)_
+**Duplicata: remover em vez de agregar.**
+`OP-0007` aparecia duas vezes com todos os campos idênticos. A decisão foi
+usar `drop_duplicates()` simples (mantém a primeira ocorrência) em vez de
+somar os valores — são o mesmo evento reportado duas vezes pelo sistema
+de origem, não duas operações reais. Somar teria inflado artificialmente
+o volume do cliente e poderia disparar a Regra 1 por engano.
+
+**Data nula: manter a operação, não inventar data.**
+`OP-0017` veio com `data: null` e a observação "data não capturada pelo
+sistema". A operação foi mantida no dataset (o valor é real e válido),
+mas a data ficou nula. Isso significa que essa operação nunca entra em
+agrupamentos por dia (Regra 1), o que é o comportamento correto — não
+temos como saber se ela faz parte de um padrão de fracionamento sem
+saber quando ocorreu.
+
+**Conversão de moeda: usar a taxa fornecida, sem arredondamento manual.**
+A única operação em USD (`OP-0013`) foi convertida com a taxa exata do
+JSON (5.4), sem arredondamentos intermediários, para não introduzir
+erro de precisão nas comparações com os limiares das regras (R$ 50.000
+e R$ 20.000).
+
+**Separação regra/LLM.** Todo número que entra no prompt do LLM (soma,
+mediana, contagem, comparação com limiar) já foi calculado em pandas
+antes da chamada. O LLM nunca recebe a lista bruta de operações para
+"fazer as contas sozinho" — ele recebe os resultados prontos e sua
+única tarefa é interpretar e redigir. Isso é verificável olhando o
+código: nenhuma célula que monta o prompt faz uma operação aritmética
+sobre os dados brutos.
 
 ## Nível 2
+
+**Design do agente: liberdade real de decisão, não um fluxo fixo.**
+As 3 ferramentas (`historico_cliente`, `operacoes_do_dia`, `perfil_canal`)
+são declaradas ao Gemini via function calling nativo, com descrições que
+orientam quando cada uma é útil, mas o agente decide sozinho quais chamar,
+quantas vezes, e em que ordem. Isso é visível nos resultados reais: CLI-013
+resolveu em 3 chamadas / 4.31s, enquanto CLI-005 precisou de 5 chamadas
+(3 dias diferentes investigados) / 32.14s. Um script fixo geraria o mesmo
+padrão de chamadas para todo cliente; o agente não gerou.
+
+**Achado do confronto: contagem de regras não prediz o risco do agente.**
+Rodando `nivel_2/confronto.py` sobre os 10 pareceres reais:
+- CLI-014 tem o MAIOR número de sinalizações (3× Regra 2), mas o agente
+  deu risco **médio** — a leitura do agente foi que os valores atípicos,
+  apesar de existirem, tinham contrapartes e canais coerentes com uma
+  atividade comercial plausível.
+- CLI-029 e CLI-017 ativaram a MESMA regra (Regra 1 — fracionamento),
+  mas receberam riscos diferentes: CLI-029 → **alto** (justificado pela
+  combinação com uso de espécie e 15 contrapartes distintas em menos de
+  3 meses), CLI-017 → **médio** (fracionamento isolado, sem outros
+  agravantes).
+- Interpretação: as regras determinísticas fazem bem o trabalho para o
+  qual foram desenhadas — sinalizar candidatos a investigar, de forma
+  barata e auditável. Mas a gravidade real de cada caso depende de
+  contexto (concentração temporal, natureza das contrapartes, uso de
+  espécie, coerência entre canal e perfil) que só aparece investigando
+  — e é exatamente aí que o agente agrega valor sobre a regra sozinha.
 
 **Dois modelos diferentes entre Nível 1 e Nível 2 — por quê:**
 
@@ -56,8 +110,43 @@ _(preencher conforme avançamos)_
 
 ## Limitações gerais
 
-_(preencher ao final)_
+- **Amostra pequena para validar estatisticamente as regras.** Com 6
+  clientes (Nível 1) e 30 clientes (Nível 2), os limiares escolhidos
+  (soma > R$ 50.000, 5× a mediana) não foram calibrados contra uma base
+  histórica real — são os valores especificados no enunciado. Em produção,
+  esses limiares deveriam ser ajustados com dados rotulados reais.
+
+- **O agente não tem memória entre clientes.** Cada `analisar_cliente()`
+  começa do zero — se dois clientes tiverem contrapartes em comum (ex:
+  ambos transacionam com "Trading XYZ"), o agente não percebe essa conexão
+  porque analisa um cliente por vez, isoladamente. Detectar redes de
+  contrapartes exigiria uma ferramenta adicional de "buscar outros
+  clientes que transacionam com X".
+
+- **Dependência de cota de API externa.** A escolha de modelo (documentada
+  acima) foi determinada por restrições de infraestrutura do provedor, não
+  só por qualidade do modelo. Isso é uma limitação prática de qualquer
+  pipeline que dependa da camada gratuita de um provedor de LLM.
+
+- **Validação Pydantic não garante correção semântica.** O schema
+  `ParecerLLM` garante que a estrutura do JSON está correta (campos certos,
+  tipos certos), mas não valida se o conteúdo faz sentido — por exemplo,
+  não há checagem de que `nivel_risco` seja de fato coerente com os
+  `red_flags` listados. Isso ficaria a cargo de um revisor humano.
 
 ## O que faria com mais tempo
 
-_(preencher ao final)_
+- **Nível 3**: implementar a trilha multiagente (Triador → Investigador →
+  Redator), separando a decisão de "vale investigar" da redação do parecer
+  final — isso permitiria auditar cada etapa isoladamente.
+- **Calibração dos limiares das regras** contra uma base histórica maior,
+  se disponível, em vez de usar os valores fixos do enunciado.
+- **Ferramenta de rede de contrapartes**: permitir ao agente perguntar
+  "quais outros clientes transacionam com esta mesma contraparte?" —
+  útil para detectar estruturas de lavagem que envolvem múltiplas contas.
+- **Re-executar o Nível 2 inteiro com o mesmo modelo do Nível 1**
+  (`gemini-3.6-flash`) caso a cota permita no futuro, para eliminar a
+  inconsistência de usar dois modelos diferentes entre os níveis.
+- **Testes automatizados** (pytest) para `aplicar_regra1_fracionamento()`
+  e `aplicar_regra2_valor_atipico()`, cobrindo os casos-limite já
+  explorados manualmente na validação do Nível 1.
