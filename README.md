@@ -1,6 +1,6 @@
 # Desafio Técnico — Estágio em Engenharia de IA
 
-Pipeline de triagem de operações financeiras para prevenção à lavagem de dinheiro,
+Pipeline de triagem de operações financeiras para prevenção à lavagem de dinheiro (PLD/FT),
 combinando **regras determinísticas** (cálculo, em pandas) com um **LLM**
 (interpretação e redação de parecer).
 
@@ -12,7 +12,7 @@ combinando **regras determinísticas** (cálculo, em pandas) com um **LLM**
 ├── dados/              # arquivos de entrada (anexos do e-mail do desafio)
 ├── nivel_1/            # notebook: limpeza, regras determinísticas, 1ª análise com LLM
 ├── nivel_2/            # ferramentas, agente, execução em lote, confronto regra x modelo
-├── nivel_3/            # trilha opcional (a definir)
+├── nivel_3/            # interface conversacional (Streamlit) sobre o agente do Nível 2
 ├── outputs/            # resultados salvos das execuções
 ├── docs/
 │   ├── DECISOES.md     # trade-offs, limitações, plano do que falta
@@ -24,18 +24,29 @@ combinando **regras determinísticas** (cálculo, em pandas) com um **LLM**
 
 ## O que foi concluído
 
-Pipeline completo de triagem PLD/FT com os 3 níveis funcionando:
-regras determinísticas em pandas, agente com function calling decidindo
-quais ferramentas investigar por cliente, e interface conversacional
-para o analista explorar os casos.
+Pipeline completo de triagem PLD/FT, com os **3 níveis** funcionando:
+
+- **Nível 1:** limpeza dos dados, regras determinísticas em pandas, validação,
+  saída estruturada e comparação de prompts.
+- **Nível 2:** regras em escala (317 operações válidas, 30 clientes), três
+  ferramentas de investigação, agente com function calling que decide quais
+  ferramentas chamar por cliente, execução em lote e confronto entre a regra
+  e o parecer do agente.
+- **Nível 3:** interface conversacional em Streamlit, em que o analista conversa
+  livremente sobre o cliente selecionado, reaproveitando toda a lógica do agente
+  do Nível 2.
 
 **Achado principal:** ao confrontar um critério simples baseado só na
 contagem de sinalizações das regras com o risco atribuído pelo agente,
-a taxa de concordância foi de apenas **50%** (5 de 10 clientes). Nas
+a taxa de concordância foi de **50%** (5 de 10 clientes). Nas
 divergências, o agente considerou contexto que a regra sozinha não
-enxerga — concentração temporal, natureza das contrapartes, uso de
+enxerga: concentração temporal, natureza das contrapartes, uso de
 espécie, coerência entre canal e perfil declarado. Detalhes e exemplos
 concretos em `docs/DECISOES.md`.
+
+> **Limitação:** o confronto foi feito sobre os 10 clientes mais sinalizados
+> (de 30), com dados fictícios. É um resultado ilustrativo, não uma medida
+> estatística do desempenho do agente.
 
 ## Como rodar
 
@@ -46,18 +57,24 @@ cp .env.example .env   # preencha GOOGLE_API_KEY com sua própria chave
 
 - **Nível 1**: abra `nivel_1/nivel_1.ipynb` (completo, com saídas executadas).
 - **Nível 2**:
-  - `python -m nivel_2.agente` — roda o agente sobre os 10 clientes mais sinalizados
+  - `python -m nivel_2.agente`: roda o agente sobre os 10 clientes mais sinalizados
     (usa API, consome cota; resultados já estão salvos em `outputs/`)
-  - `python -m nivel_2.confronto` — compara regra vs. parecer do agente
+  - `python -m nivel_2.confronto`: compara regra vs. parecer do agente
     (não usa API, só lê os pareceres já salvos)
-  - `python -m nivel_2.tools` — testa as 3 ferramentas isoladamente
+  - `python -m nivel_2.tools`: testa as 3 ferramentas isoladamente
     (não usa API)
+- **Nível 3**: `streamlit run nivel_3/app.py` (usa API)
+
+> No Windows com Anaconda, pode ocorrer um erro de SSL ao chamar a API.
+> A causa e a correção estão em `docs/DECISOES.md`.
 
 ## Status
 
-- **Nível 1**: completo (limpeza, regras, validação, análise com LLM, comparação de prompts)
-- **Nível 2**: completo (regras em escala, ferramentas, agente, execução em lote, confronto)
-- **Nível 3**: não iniciado
+| Nível | Situação |
+|---|---|
+| 1 | Completo |
+| 2 | Completo |
+| 3 | Completo (interface conversacional em Streamlit) |
 
 Detalhamento item a item em `ENTREGA.yaml`.
 
